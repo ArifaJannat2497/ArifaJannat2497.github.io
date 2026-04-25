@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Dr. Arifa Jannat</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh}
+a{color:#58a6ff;text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px;display:grid;grid-template-columns:260px 1fr;gap:24px}
+/* SIDEBAR */
+.sidebar{}
+.avatar{width:200px;height:200px;border-radius:50%;background:linear-gradient(135deg,#1f6feb,#388bfd);display:flex;align-items:center;justify-content:center;font-size:64px;font-weight:700;color:#fff;margin-bottom:16px;border:2px solid #30363d}
+.name{font-size:22px;font-weight:700;color:#e6edf3;margin-bottom:2px}
+.handle{font-size:16px;color:#8b949e;margin-bottom:12px}
+.bio{font-size:13px;color:#8b949e;line-height:1.5;margin-bottom:16px}
+.btn-follow{display:block;width:100%;padding:7px;border:1px solid #30363d;border-radius:6px;text-align:center;font-size:13px;color:#e6edf3;background:#21262d;cursor:pointer;margin-bottom:16px}
+.btn-follow:hover{background:#30363d}
+.stat-row{display:flex;gap:16px;font-size:13px;color:#8b949e;margin-bottom:16px;align-items:center}
+.stat-row span b{color:#e6edf3}
+.section-label{font-size:13px;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;margin-top:16px}
+.badge-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{padding:3px 10px;border-radius:20px;font-size:12px;border:1px solid #30363d;color:#8b949e;background:#161b22}
+.contact-item{font-size:13px;color:#8b949e;margin-bottom:6px;display:flex;align-items:flex-start;gap:6px}
+.contact-item svg{flex-shrink:0;margin-top:2px}
+.lang-bar{margin-bottom:16px}
+.lang-strip{height:8px;border-radius:4px;display:flex;overflow:hidden;margin-bottom:8px}
+.lang-strip div{height:100%}
+.lang-legend{display:flex;flex-wrap:wrap;gap:10px}
+.lang-dot{display:flex;align-items:center;gap:4px;font-size:12px;color:#8b949e}
+.lang-dot span{width:10px;height:10px;border-radius:50%;display:inline-block}
+/* MAIN */
+.main{}
+.tab-bar{display:flex;gap:0;border-bottom:1px solid #30363d;margin-bottom:24px}
+.tab{padding:10px 16px;font-size:14px;color:#8b949e;cursor:pointer;border-bottom:2px solid transparent;display:flex;align-items:center;gap:6px}
+.tab.active{color:#e6edf3;border-bottom-color:#f78166}
+.tab .count{background:#21262d;border:1px solid #30363d;border-radius:20px;padding:0 6px;font-size:11px}
+/* OVERVIEW panel */
+.panel{display:none}
+.panel.active{display:block}
+/* Pinned repos */
+.pin-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.repo-card{border:1px solid #30363d;border-radius:8px;padding:14px;background:#161b22}
+.repo-card .repo-name{font-size:14px;font-weight:600;color:#58a6ff;margin-bottom:4px}
+.repo-card .repo-desc{font-size:12px;color:#8b949e;margin-bottom:10px;line-height:1.5}
+.repo-meta{display:flex;align-items:center;gap:12px;font-size:12px;color:#8b949e}
+.lang-dot-sm{width:10px;height:10px;border-radius:50%;display:inline-block}
+/* Contribution heatmap */
+.contrib-section{border:1px solid #30363d;border-radius:8px;padding:16px;background:#161b22;margin-bottom:24px}
+.contrib-title{font-size:14px;color:#8b949e;margin-bottom:12px}
+.heatmap{display:grid;grid-template-columns:repeat(52,1fr);gap:2px}
+.heatmap-cell{aspect-ratio:1;border-radius:2px;background:#161b22;border:1px solid #21262d}
+.l0{background:#161b22}
+.l1{background:#0e4429}
+.l2{background:#006d32}
+.l3{background:#26a641}
+.l4{background:#39d353}
+/* Publications panel */
+.pub-item{border-bottom:1px solid #21262d;padding:14px 0}
+.pub-item:last-child{border-bottom:none}
+.pub-year{font-size:11px;color:#8b949e;font-weight:600;letter-spacing:.5px;margin-bottom:2px}
+.pub-title{font-size:14px;color:#e6edf3;margin-bottom:4px;line-height:1.5}
+.pub-meta{font-size:12px;color:#8b949e}
+.pub-doi{font-size:11px;margin-top:4px}
+/* Experience */
+.exp-item{display:flex;gap:14px;margin-bottom:20px}
+.exp-icon{width:36px;height:36px;border-radius:8px;background:#1f6feb22;border:1px solid #1f6feb55;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+.exp-content .role{font-size:14px;font-weight:600;color:#e6edf3}
+.exp-content .org{font-size:13px;color:#58a6ff}
+.exp-content .period{font-size:12px;color:#8b949e;margin-top:2px}
+/* Awards */
+.award-item{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start}
+.award-year{font-size:12px;color:#f78166;font-weight:700;min-width:38px;padding-top:2px}
+.award-text{font-size:13px;color:#e6edf3;line-height:1.5}
+/* Skills */
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:16px}
+.skill-card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:10px 12px;font-size:13px;color:#e6edf3}
+.skill-card .sk-label{font-size:11px;color:#8b949e;margin-bottom:4px}
+
+@media(max-width:700px){
+  .wrap{grid-template-columns:1fr}
+  .pin-grid{grid-template-columns:1fr}
+  .avatar{width:80px;height:80px;font-size:28px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="avatar">AJ</div>
+  <div class="name">Dr. Arifa Jannat</div>
+  <div class="handle">@ArifaJannat2497</div>
+  <div class="bio">Agricultural economist · Climate &amp; market researcher · Associate Professor @BAU · PhD @Tsukuba · Postdoc @Adelaide</div>
+  <button class="btn-follow">Follow</button>
+  <div class="stat-row">
+    <span>🏛 <b>48</b> publications</span>
+    <span>📚 <b>2</b> books</span>
+  </div>
+
+  <div class="section-label">Organizations</div>
+  <div class="badge-list">
+    <span class="badge">🌱 BAU</span>
+    <span class="badge">🔬 U. Adelaide</span>
+    <span class="badge">🎌 U. Tsukuba</span>
+  </div>
+
+  <div class="section-label">Contact</div>
+  <div class="contact-item">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="#8b949e"><path d="M1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25v-8.5C0 2.784.784 2 1.75 2ZM1.5 12.251c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V5.809L8.38 9.397a.75.75 0 0 1-.76 0L1.5 5.809v6.442Zm13-8.16L8 7.88 1.5 4.09V3.75a.25.25 0 0 1 .25-.25h12.5a.25.25 0 0 1 .25.25v.341Z"/></svg>
+    <a href="mailto:arifa.zannat@bau.edu.bd">arifa.zannat@bau.edu.bd</a>
+  </div>
+  <div class="contact-item">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="#8b949e"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+    <a href="https://github.com/ArifaJannat2497" target="_blank">ArifaJannat2497</a>
+  </div>
+  <div class="contact-item">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="#8b949e"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg>
+    <a href="https://www.linkedin.com/in/dr-arifa-jannat-a59353119/" target="_blank">LinkedIn</a>
+  </div>
+  <div class="contact-item">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="#8b949e"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0ZM1.5 8a6.5 6.5 0 1 1 13 0 6.5 6.5 0 0 1-13 0Z"/><path d="M8 4.25a.75.75 0 0 1 .75.75v3.25H12a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1-.75-.75V5A.75.75 0 0 1 8 4.25Z"/></svg>
+    <span>Mymensingh, Bangladesh</span>
+  </div>
+
+  <div class="section-label">Languages</div>
+  <div class="lang-bar">
+    <div class="lang-strip">
+      <div style="width:50%;background:#3572A5" title="STATA/Python"></div>
+      <div style="width:25%;background:#f1e05a" title="R/EViews"></div>
+      <div style="width:15%;background:#563d7c" title="SPSS"></div>
+      <div style="width:10%;background:#e34c26" title="Other"></div>
+    </div>
+    <div class="lang-legend">
+      <div class="lang-dot"><span style="background:#3572A5"></span>STATA/Python</div>
+      <div class="lang-dot"><span style="background:#f1e05a"></span>R / EViews</div>
+      <div class="lang-dot"><span style="background:#563d7c"></span>SPSS</div>
+      <div class="lang-dot"><span style="background:#e34c26"></span>Other</div>
+    </div>
+  </div>
+
+  <div class="section-label">Memberships</div>
+  <div class="badge-list">
+    <span class="badge">RAID</span>
+    <span class="badge">JUAAB</span>
+    <span class="badge">GLEC</span>
+    <span class="badge">BEA</span>
+    <span class="badge">BAEA</span>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="tab-bar">
+    <div class="tab active" onclick="showPanel('overview',this)">📋 Overview</div>
+    <div class="tab" onclick="showPanel('publications',this)">📄 Publications <span class="count">48</span></div>
+    <div class="tab" onclick="showPanel('experience',this)">💼 Experience</div>
+    <div class="tab" onclick="showPanel('awards',this)">🏆 Awards</div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="panel active" id="panel-overview">
+    <div class="pin-grid">
+      <div class="repo-card">
+        <div class="repo-name">🌾 climate-agri-bangladesh</div>
+        <div class="repo-desc">Supply-demand models for potato &amp; rapeseed production under climate variability. Sustainability &amp; Agriculture journals.</div>
+        <div class="repo-meta"><span class="lang-dot-sm" style="background:#3572A5"></span>STATA &nbsp;⭐ Climate Change</div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-name">📊 fdi-forecasting-bangladesh</div>
+        <div class="repo-desc">ARIMA + Random Forest approach for forecasting FDI inflows. Published in J. Risk &amp; Financial Management, 2024.</div>
+        <div class="repo-meta"><span class="lang-dot-sm" style="background:#f1e05a"></span>R &nbsp;⭐ ML / Econometrics</div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-name">🌊 mangrove-lulc-bangladesh</div>
+        <div class="repo-desc">Remote sensing + fuzzy expert system for mangrove vulnerability assessment in coastal Bangladesh.</div>
+        <div class="repo-meta"><span class="lang-dot-sm" style="background:#e34c26"></span>Python &nbsp;⭐ Remote Sensing</div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-name">💹 covid-energy-markets</div>
+        <div class="repo-desc">Fossil fuel market fluctuations &amp; COVID-19 effects on energy consumption in India &amp; Japan. Multi-country analysis.</div>
+        <div class="repo-meta"><span class="lang-dot-sm" style="background:#563d7c"></span>EViews &nbsp;⭐ Energy Economics</div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-name">🌿 crop-diversification-egp</div>
+        <div class="repo-desc">Status &amp; drivers of crop diversification in the Eastern Gangetic Plains (BD, India, Nepal). CGIAR-funded research.</div>
+        <div class="repo-meta"><span class="lang-dot-sm" style="background:#3572A5"></span>STATA &nbsp;⭐ Food Systems</div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-name">🐄 dairy-smallholder-bd</div>
+        <div class="repo-desc">Livestock productivity &amp; smallholder commercialization in Bangladesh dairy sector. Food &amp; Energy Security, 2025.</div>
+        <div class="repo-meta"><span class="lang-dot-sm" style="background:#f1e05a"></span>R &nbsp;⭐ Agribusiness</div>
+      </div>
+    </div>
+
+    <!-- Contribution heatmap -->
+    <div class="contrib-section">
+      <div class="contrib-title">Research contribution activity · 2016 – 2026</div>
+      <div class="heatmap" id="heatmap"></div>
+      <div style="display:flex;gap:6px;align-items:center;font-size:11px;color:#8b949e;margin-top:10px;justify-content:flex-end">
+        Less
+        <span style="width:10px;height:10px;border-radius:2px;background:#161b22;border:1px solid #30363d;display:inline-block"></span>
+        <span style="width:10px;height:10px;border-radius:2px;background:#0e4429;display:inline-block"></span>
+        <span style="width:10px;height:10px;border-radius:2px;background:#006d32;display:inline-block"></span>
+        <span style="width:10px;height:10px;border-radius:2px;background:#26a641;display:inline-block"></span>
+        <span style="width:10px;height:10px;border-radius:2px;background:#39d353;display:inline-block"></span>
+        More
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div style="margin-bottom:8px;font-size:14px;font-weight:600;color:#e6edf3">Research Skills</div>
+    <div class="skill-grid">
+      <div class="skill-card"><div class="sk-label">Econometrics</div>ARDL, ARIMA, Probit, Logit</div>
+      <div class="skill-card"><div class="sk-label">Software</div>STATA · SPSS · EViews · R · Python</div>
+      <div class="skill-card"><div class="sk-label">Methods</div>Supply-demand models, Panel data</div>
+      <div class="skill-card"><div class="sk-label">Remote Sensing</div>LULC, GIS, Fuzzy expert systems</div>
+      <div class="skill-card"><div class="sk-label">Teaching</div>Thesis supervision, Lecturing</div>
+      <div class="skill-card"><div class="sk-label">Languages</div>Bengali · English · Japanese (N4)</div>
+    </div>
+  </div>
+
+  <!-- PUBLICATIONS -->
+  <div class="panel" id="panel-publications">
+    <div style="font-size:13px;color:#8b949e;margin-bottom:16px">48 peer-reviewed publications · 2 books · Click DOI to open</div>
+    <div id="pub-list"></div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <div class="panel" id="panel-experience">
+    <div class="exp-item">
+      <div class="exp-icon">🎓</div>
+      <div class="exp-content">
+        <div class="role">Associate Professor</div>
+        <div class="org">Institute of Agribusiness &amp; Development Studies (IADS), Bangladesh Agricultural University</div>
+        <div class="period">Feb 2023 – Present · Mymensingh, Bangladesh</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">🔬</div>
+      <div class="exp-content">
+        <div class="role">Postdoctoral Visiting Research Fellow</div>
+        <div class="org">University of Adelaide – Waite Campus, South Australia</div>
+        <div class="period">Feb 2023 – Mar 2024 · Adelaide, Australia</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">🌏</div>
+      <div class="exp-content">
+        <div class="role">Research Assistant</div>
+        <div class="org">Global and Local Environment Co-creation Institute (GLEC), Ibaraki University</div>
+        <div class="period">Aug – Oct 2021 · Japan</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">📚</div>
+      <div class="exp-content">
+        <div class="role">Assistant Professor</div>
+        <div class="org">IADS, Bangladesh Agricultural University</div>
+        <div class="period">Feb 2018 – Feb 2023 · Mymensingh, Bangladesh</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">📗</div>
+      <div class="exp-content">
+        <div class="role">Lecturer</div>
+        <div class="org">IADS, Bangladesh Agricultural University</div>
+        <div class="period">Feb 2016 – Feb 2018 · Mymensingh, Bangladesh</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">💡</div>
+      <div class="exp-content">
+        <div class="role">Principal Investigator – BAURES Project</div>
+        <div class="org">Agricultural Modernization &amp; Sustainable Livelihood among Tribal &amp; Non-tribal Farmers</div>
+        <div class="period">Sep 2017 – Aug 2018</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">🌐</div>
+      <div class="exp-content">
+        <div class="role">Research Associate – CGIAR</div>
+        <div class="org">Poverty Squares &amp; Gender Circles: Eastern Gangetic Plains (Bangladesh, India, Nepal)</div>
+        <div class="period">Jul 2015 – Jan 2016</div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;margin-bottom:10px;font-size:14px;font-weight:600;color:#e6edf3">Education</div>
+    <div class="exp-item">
+      <div class="exp-icon">🎌</div>
+      <div class="exp-content">
+        <div class="role">Doctor of Philosophy (PhD)</div>
+        <div class="org">University of Tsukuba, Japan</div>
+        <div class="period">2019 – 2022 · Graduate School of Life and Environmental Sciences</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">🌾</div>
+      <div class="exp-content">
+        <div class="role">MS in Agricultural Economics (Production Economics) · CGPA 3.953/4.00</div>
+        <div class="org">Bangladesh Agricultural University</div>
+        <div class="period">2014 – 2015</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">🌾</div>
+      <div class="exp-content">
+        <div class="role">BSc in Agricultural Economics (Hons.) · CGPA 3.747/4.00</div>
+        <div class="org">Bangladesh Agricultural University</div>
+        <div class="period">2010 – 2013</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AWARDS -->
+  <div class="panel" id="panel-awards">
+    <div class="award-item"><div class="award-year">2022</div><div class="award-text">Dean's Academic Excellence Award, Graduate School of Life and Environmental Sciences, University of Tsukuba, Japan</div></div>
+    <div class="award-item"><div class="award-year">2021</div><div class="award-text">Japan Science and Technology Agency (JST) Fellowship, Japan</div></div>
+    <div class="award-item"><div class="award-year">2020–22</div><div class="award-text">Scholarship Awardee, More Jobs Better Lives Foundation (MJBL), Tokyo, Japan</div></div>
+    <div class="award-item"><div class="award-year">2014–15</div><div class="award-text">NST (National Science and Technology) Fellowship, Ministry of Science and Technology, Government of Bangladesh</div></div>
+    <div style="margin-top:24px;margin-bottom:10px;font-size:14px;font-weight:600;color:#e6edf3">Editorial &amp; Review Service</div>
+    <div style="font-size:13px;color:#8b949e;line-height:2">
+      Journal Reviewer: Sustainable Futures (Elsevier) · Cogent Business &amp; Management · GeoJournal (Springer) · Frontiers in Environmental Science · Organic Agriculture (Springer Nature) · Scientific Reports (Springer Nature) · Sustainability (MDPI) · Agriculture (MDPI)<br><br>
+      Guest Editor: Special Issue "Energy Transition Amidst Climate Change and Sustainability" – <em>Sustainability</em> journal
+    </div>
+  </div>
+</main>
+</div>
+
+<script>
+function showPanel(id,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  el.classList.add('active');
+}
+
+// Heatmap
+(function(){
+  const h=document.getElementById('heatmap');
+  const lvls=[0,0,0,1,1,0,1,2,1,0,0,1,2,3,2,1,2,3,4,3,2,3,4,3,4,3,4,4,3,4,4,3,4,4,4,3,4,3,4,4,3,4,4,3,4,4,3,4,4,4,4,4];
+  for(let i=0;i<52;i++){
+    const d=document.createElement('div');
+    d.className='heatmap-cell l'+(lvls[i]||0);
+    h.appendChild(d);
+  }
+})();
+
+// Publications
+const pubs=[
+  {y:2026,t:"Agro-environmental and socio-economic determinants of crop diversification in salinity-affected coastal production systems of Bangladesh",j:"Agriculture & Food Security",doi:"10.1186/s40066-025-00597-2"},
+  {y:2026,t:"Analyzing food security and livelihood dynamics of the Indigenous community in Bangladesh: A post-COVID-19 perspective",j:"Food and Energy Security",doi:"10.1002/fes3.70202"},
+  {y:2026,t:"Determinants of household adaptation to climate vulnerability in wetland areas of Bangladesh",j:"Climate Resilience and Sustainability",doi:"10.1002/cli2.70028"},
+  {y:2025,t:"Beyond rainfall and fertilizer: Autoregressive distributed lag insights on population, greenhouse gas emissions, and wheat sustainability in Bangladesh",j:"Environmental and Sustainability Indicators",doi:"10.1016/j.indic.2025.101098"},
+  {y:2025,t:"Identifying key competencies of female e-commerce entrepreneurs in Bangladesh",j:"Journal of Global Entrepreneurship Research",doi:"10.1007/s40497-025-00480-1"},
+  {y:2025,t:"Determinants and welfare impacts of combined harvester adoption in wetland areas of Bangladesh",j:"Food and Energy Security",doi:"10.1002/fes3.70172"},
+  {y:2025,t:"Livestock production and dairy sector performance in Bangladesh: Does dairy productivity promote smallholder commercialization?",j:"Food and Energy Security",doi:"10.1002/fes3.70171"},
+  {y:2025,t:"Determinants of modern agricultural machinery adoption in northern Bangladesh: A multivariate probit analysis",j:"Sustainable Futures",doi:"10.1016/j.sftr.2025.101615"},
+  {y:2025,t:"Investigating alternate wetting and drying irrigation method over conventional practice for Boro rice production in Bangladesh",j:"Discover Agriculture",doi:"10.1007/s44279-025-00356-8"},
+  {y:2025,t:"What enables agricultural diversification in the Eastern Gangetic Plains? Learning from past success",j:"Urban Agriculture & Regional Food Systems",doi:"10.1002/uar2.70019"},
+  {y:2025,t:"Is nudging effective in promoting blue bond investment? Evidence from Japanese retail investors",j:"Sustainable Development",doi:"10.1002/sd.70028"},
+  {y:2025,t:"The impact of fossil fuel market fluctuations on the Japanese electricity market during the COVID-19 era",j:"Commodities",doi:"10.3390/commodities4020006"},
+  {y:2025,t:"Patterns of livelihood diversification in farming systems of the Eastern Gangetic Plains",j:"Agricultural Systems",doi:"10.1016/j.agsy.2025.104346"},
+  {y:2025,t:"Status and drivers of crop diversification in the Eastern Gangetic Plains of South Asia",j:"Journal of Agriculture and Food Research",doi:"10.1016/j.jafr.2025.101776"},
+  {y:2025,t:"The role of livelihood diversification in agricultural modernization among tribal farmers in Bangladesh",j:"PLOS ONE",doi:"10.1371/journal.pone.0318457"},
+  {y:2025,t:"Revealing the interrelationship of economic, environmental, and social factors with globalization in G-7 countries tourism growth",j:"Sustainable Futures",doi:"10.1016/j.sftr.2025.100483"},
+  {y:2025,t:"Dataset on the patterns of livelihood diversification in farming systems of the Eastern Gangetic Plains",j:"Data in Brief",doi:"10.1016/j.dib.2025.111372"},
+  {y:2025,t:"Harnessing complexity: Integrating remote sensing and fuzzy expert system for mangrove forest vulnerability in Bangladesh",j:"Journal of Coastal Conservation",doi:"10.1007/s11852-024-01093-8"},
+  {y:2025,t:"Socio-ecological factors influencing boro rice yield and profitability in wetland areas of Bangladesh",j:"Discover Agriculture",doi:"10.1007/s44279-024-00146-8"},
+  {y:2024,t:"Forecasting foreign direct investment inflow to Bangladesh using ARIMA and a machine learning-based random forest approach",j:"Journal of Risk and Financial Management",doi:"10.3390/jrfm17100451"},
+  {y:2024,t:"Women participation in South Asian agriculture: A comprehensive systematic review",j:"Discover Sustainability",doi:"10.1007/s43621-024-00649-w"},
+  {y:2024,t:"Assessing the economic viability and factors affecting farmer adoption of black soldier fly larvae as broiler feed",j:"Discover Agriculture",doi:"10.1007/s44279-024-00064-9"},
+  {y:2024,t:"Disaggregated impact of non-renewable energy consumption on environmental sustainability of the United States",j:"Sustainability",doi:"10.3390/su16198434"},
+  {y:2024,t:"Dataset on the status of crop diversification in the Eastern Gangetic Plains of South Asia",j:"Data in Brief",doi:"10.1016/j.dib.2024.110721"},
+  {y:2024,t:"Assessing the CO₂ emissions and energy source consumption nexus in Japan",j:"Sustainability",doi:"10.3390/su16135742"},
+  {y:2023,t:"The impacts of COVID-19 on seafood prices in Japan: A comparison between cheap and luxury products",j:"PLOS ONE",doi:"10.1371/journal.pone.0291395"},
+  {y:2022,t:"Factors determining fruit consumption level in a peri-urban area of Bangladesh",j:"Fundamental and Applied Agriculture",doi:"10.5455/faa.64383"},
+  {y:2022,t:"Developing a novel technique for investigating guidelines and frameworks: A text mining comparison between international and Japanese green bonds",j:"Journal of Risk and Financial Management",doi:"10.3390/jrfm15090382"},
+  {y:2022,t:"Effects of the state of emergency during the COVID-19 pandemic on Tokyo vegetable markets",j:"Sustainability",doi:"10.3390/su14159719"},
+  {y:2022,t:"Investigating the impact of international markets on imported and exported non-cereal crops in Bangladesh",j:"Agriculture",doi:"10.3390/agriculture12060833"},
+  {y:2022,t:"Does climate change affect rapeseed production in exporting and importing countries?",j:"Sustainability",doi:"10.3390/su14106051"},
+  {y:2022,t:"Revealing the pathway of reluctancy toward agricultural credit repayment: A case study on fish farmers in Bangladesh",j:"SN Business & Economics",doi:"10.1007/s43546-022-00224-3"},
+  {y:2021,t:"Does staying at home during the COVID-19 pandemic help reduce CO₂ emissions?",j:"Sustainability",doi:"10.3390/su13158534"},
+  {y:2021,t:"Assessing the impacts of climate variations on potato production in Bangladesh: A supply and demand model approach",j:"Sustainability",doi:"10.3390/su13095011"},
+  {y:2021,t:"Impact assessment of agricultural modernization on sustainable livelihood among tribal and non-tribal farmers in Bangladesh",j:"GeoJournal",doi:"10.1007/s10708-019-10076-4"},
+  {y:2021,t:"Food security and dietary diversity of tea workers in Bangladesh",j:"GeoJournal",doi:"10.1007/s10708-019-10108-z"},
+  {y:2020,t:"Potential economic impacts of the COVID-19 pandemic on South Asian economies: A review",j:"World",doi:"10.3390/world1030020"},
+  {y:2020,t:"Effects of COVID-19 on Indian energy consumption",j:"Sustainability",doi:"10.3390/su12145616"},
+  {y:2020,t:"Factors determining conversion of agricultural land use in Bangladesh: Farmers' perceptions of climate change",j:"GeoJournal",doi:"10.1007/s10708-018-09966-w"},
+  {y:2019,t:"Economics of Boro rice production in Rangpur district of Bangladesh: Comparative assessment of urea super granule and traditional urea application",j:"American Journal of Agricultural and Biological Sciences",doi:"10.3844/ajabssp.2019.23.34"},
+  {y:2018,t:"Dataset on the impact of GO-NGO support on crop intensification and food security in Bangladesh",j:"Data in Brief",doi:"10.1016/j.dib.2018.03.020"},
+  {y:2018,t:"Adoption prospects and implication problems of practicing conservation agriculture in Bangladesh",j:"Soil & Tillage Research",doi:"10.1016/j.still.2017.11.003"},
+  {y:2018,t:"Wetland agribusiness aspects and potential in Bangladesh",j:"Data in Brief",doi:"10.1016/j.dib.2017.11.055"},
+  {y:2017,t:"GO-NGO support in selected char areas of Sirajganj district in Bangladesh: Impact on crop profitability and farmers' income generation",j:"American Journal of Agricultural and Biological Sciences",doi:"10.3844/ajabssp.2017.130.138"},
+  {y:2017,t:"Indigenous women participation behavior under 'One House One Farm' project in Bangladesh",j:"Progressive Agriculture",doi:"10.3329/pa.v28i2.33474"},
+  {y:2017,t:"Contribution of women to household income and decision making in Bangladesh",j:"Progressive Agriculture",doi:"10.3329/pa.v28i2.33473"},
+  {y:2017,t:"Feasibility of rice procurement programme for poor farmers in Bangladesh",j:"Progressive Agriculture",doi:"10.3329/pa.v28i2.33475"},
+  {y:2016,t:"Farmers' perception about 'One House One Farm' project and its impact on enterprise profitability in Bangladesh",j:"The Agriculturists",doi:"10.3329/agric.v14i1.29099"}
+];
+const pl=document.getElementById('pub-list');
+pubs.forEach(p=>{
+  pl.innerHTML+=`<div class="pub-item">
+    <div class="pub-year">${p.y}</div>
+    <div class="pub-title">${p.t}</div>
+    <div class="pub-meta">${p.j}</div>
+    <div class="pub-doi"><a href="https://doi.org/${p.doi}" target="_blank">doi: ${p.doi}</a></div>
+  </div>`;
+});
+</script>
+</body>
+</html>
